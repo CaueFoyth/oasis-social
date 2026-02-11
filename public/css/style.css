@@ -1,0 +1,30 @@
+:root {
+    --oasis-blue: #64b5f6;
+    --oasis-green: #4db6ac;
+    --oasis-lilac: #ce93d8;
+    --oasis-white: #ffffff;
+    --oasis-text: #2c3e50;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: var(--oasis-text);
+}
+
+.btn-primary {
+    background-color: var(--oasis-blue);
+    border-color: var(--oasis-blue);
+    color: white;
+}
+
+.btn-success {
+    background-color: var(--oasis-green);
+    border-color: var(--oasis-green);
+    color: white;
+}
+
+.card-oasis {
+    background-color: var(--oasis-white);
+    border-left: 5px solid var(--oasis-lilac);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
