@@ -27,7 +27,10 @@ fastify.register(fastifyView, {
 
 fastify.register(require('./src/routes'))
 
+fastify.register(require('@fastify/static'), {
+    root: path.join(__dirname, "public"),
+})
+
 fastify.listen({ port: PORT }, (err, address) => {
-    // if (err) throw err
     console.log(`Servidor na porta ${PORT}!`)
 })

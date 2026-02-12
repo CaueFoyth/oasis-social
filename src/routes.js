@@ -83,7 +83,25 @@ const routes = async (fastify, options) => {
 
         const user = JSON.parse(req.unsignCookie(cookie).value)
 
-        return reply.view('feed.ejs', { error: null, user })
+        return reply.view('feed.ejs', { error: null, user, content: '', category: '' })
+    })
+
+    //===============================Post===============================
+    fastify.post('/post', async (req, reply) => {
+        const cookie = req.cookies.session_id
+        if (!cookie || !req.unsignCookie(cookie)) return reply.redirect('/login')
+
+        const user = JSON.parse(req.unsignCookie(cookie).value)
+
+        const { content, category } = req.body
+
+        if (!content || !category) {
+            return reply.view('feed.ejs', { error: 'Preencha todos os campos', user, content, category })
+        }
+
+        await db.createPost(fastify.pg, { user_id: user.user_id, content, category })
+
+        return reply.redirect('/feed')
     })
 }
 

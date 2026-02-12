@@ -14,7 +14,16 @@ const getUserByEmail = async (client, email) => {
     return result
 }
 
+const createPost = async (client, { user_id, content, category }) => {
+    const result = await client.query(
+        'INSERT INTO posts (user_id, content, category) VALUES ($1, $2, $3)',
+        [user_id, content, category]
+    )
+    return result
+}
+
 module.exports = {
     createUser,
-    getUserByEmail
+    getUserByEmail,
+    createPost
 }
