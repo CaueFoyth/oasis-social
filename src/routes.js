@@ -6,6 +6,10 @@ const routes = async (fastify, options) => {
         return reply.view('index.ejs')
     })
 
+    fastify.get('/about', async (req, reply) => {
+        return reply.view('about.ejs')
+    })
+
     //===============================REGISTER===============================
     fastify.get('/register', async (req, reply) => {
         const cookie = req.cookies.session_id
@@ -83,7 +87,9 @@ const routes = async (fastify, options) => {
 
         const user = JSON.parse(req.unsignCookie(cookie).value)
 
-        return reply.view('feed.ejs', { error: null, user, content: '', category: '' })
+        const posts = await db.getPosts(fastify.pg)
+
+        return reply.view('feed.ejs', { error: null, user, content: '', category: '', posts: posts.rows })
     })
 
     //===============================Post===============================

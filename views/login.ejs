@@ -13,30 +13,41 @@
         crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="d-flex align-items-center min-vh-100">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Login</h1>
-                <form action="/login" method="post">
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="<%= email || '' %>">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card-oasis">
+                    <h2 class="text-center mb-4">Login</h2>
+                    <form action="/login" method="post">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="<%= email || '' %>"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Senha</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p class="mb-0">Ainda não tem conta? <a href="/register">Cadastre-se</a></p>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Senha</label>
-                        <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <% if (error) { %>
+                    <div class="alert alert-danger mt-3 shadow-sm border-0" role="alert">
+                        <%= error %>
                     </div>
-                    <button type="submit" class="btn btn-primary">Entrar</button>
-                </form>
+                    <% } %>
             </div>
         </div>
-        <% if (error) { %>
-            <div class="alert alert-danger mt-3" role="alert">
-                <%= error %>
-            </div>
-            <% } %>
     </div>
 </body>
+<footer>
+    <p>Feito por Foyth. &copy; 2026</p>
+</footer>
 
 </html>
