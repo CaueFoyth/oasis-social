@@ -21,8 +21,7 @@
                 <span class="me-3">Olá, <strong>
                         <%= user.name %>!
                     </strong></span>
-                <a href="/login" class="btn btn-outline-danger btn-sm"
-                    onclick="document.cookie = 'session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';">Sair</a>
+                <a href="/logout" class="btn btn-outline-danger btn-sm">Sair</a>
             </div>
         </div>
     </nav>
@@ -83,17 +82,31 @@
                                         <p class="card-text fs-5 mb-3">
                                             <%= post.content %>
                                         </p>
-                                        <div class="border-top pt-3 d-flex gap-3">
-                                            <button
-                                                class="btn btn-sm text-secondary p-0 d-flex align-items-center gap-1"
-                                                style="background: none; border: none;">
-                                                <i class="far fa-heart"></i> Curtir
-                                            </button>
-                                            <button
-                                                class="btn btn-sm text-secondary p-0 d-flex align-items-center gap-1"
-                                                style="background: none; border: none;">
-                                                <i class="far fa-comment"></i> Comentar
-                                            </button>
+                                        <div class="border-top pt-3 d-flex justify-content-between align-items-center">
+                                            <div class="d-flex gap-3">
+                                                <button
+                                                    class="btn btn-sm text-secondary p-0 d-flex align-items-center gap-1"
+                                                    style="background: none; border: none;">
+                                                    <i class="far fa-heart"></i> Curtir
+                                                </button>
+                                                <button
+                                                    class="btn btn-sm text-secondary p-0 d-flex align-items-center gap-1"
+                                                    style="background: none; border: none;">
+                                                    <i class="far fa-comment"></i> Comentar
+                                                </button>
+                                            </div>
+                                            <% if (post.user_id===user.user_id) { %>
+                                                <div class="d-flex gap-2">
+                                                    <a href="/post/edit/<%= post.id %>"
+                                                        class="btn btn-sm btn-outline-primary">Editar</a>
+                                                    <form action="/post/delete/<%= post.id %>" method="POST"
+                                                        class="d-inline"
+                                                        onsubmit="return confirm('Tem certeza que deseja excluir?')">
+                                                        <button type="submit"
+                                                            class="btn btn-sm btn-outline-danger">Excluir</button>
+                                                    </form>
+                                                </div>
+                                                <% } %>
                                         </div>
                                     </div>
                                     <% }) %>

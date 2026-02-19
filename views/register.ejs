@@ -13,46 +13,48 @@
         crossorigin="anonymous"></script>
 </head>
 
-<body class="d-flex align-items-center min-vh-100">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <div class="card-oasis">
-                    <h2 class="text-center mb-4">Cadastro</h2>
-                    <form action="/register" method="post">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nome</label>
-                            <input type="text" class="form-control" id="name" name="name" value="<%= name || '' %>"
-                                required>
+<body class="d-flex flex-column min-vh-100">
+    <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-5">
+                    <div class="card-oasis">
+                        <h2 class="text-center mb-4">Cadastro</h2>
+                        <form action="/register" method="post">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="name" name="name" value="<%= name || '' %>"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    value="<%= email || '' %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Senha</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">Cadastrar</button>
+                            </div>
+                        </form>
+                        <div class="text-center mt-3">
+                            <p class="mb-0">Já tem conta? <a href="/login">Faça Login</a></p>
                         </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="<%= email || '' %>"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Senha</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg">Cadastrar</button>
-                        </div>
-                    </form>
-                    <div class="text-center mt-3">
-                        <p class="mb-0">Já tem conta? <a href="/login">Faça Login</a></p>
                     </div>
+                    <% if (error) { %>
+                        <div class="alert alert-danger mt-3 shadow-sm border-0" role="alert">
+                            <%= error %>
+                        </div>
+                        <% } %>
                 </div>
-                <% if (error) { %>
-                    <div class="alert alert-danger mt-3 shadow-sm border-0" role="alert">
-                        <%= error %>
-                    </div>
-                    <% } %>
             </div>
         </div>
     </div>
+    <footer class="py-3 text-center">
+        <p>Feito por Foyth. &copy; 2026</p>
+    </footer>
 </body>
-<footer>
-    <p>Feito por Foyth. &copy; 2026</p>
-</footer>
 
 </html>

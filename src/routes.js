@@ -80,6 +80,11 @@ const routes = async (fastify, options) => {
         return reply.redirect('/feed')
     })
 
+    fastify.get('/logout', async (req, reply) => {
+        reply.clearCookie('session_id', { path: '/' })
+        return reply.redirect('/')
+    })
+
     //===============================Feed===============================
     fastify.get('/feed', async (req, reply) => {
         const cookie = req.cookies.session_id
@@ -106,6 +111,54 @@ const routes = async (fastify, options) => {
         }
 
         await db.createPost(fastify.pg, { user_id: user.user_id, content, category })
+
+        return reply.redirect('/feed')
+    })
+
+    fastify.post('/post/delete/:id', async (req, reply) => {
+        const cookie = req.cookies.session_id
+        if (!cookie || !req.unsignCookie(cookie)) return reply.redirect('/login')
+
+        const user = JSON.parse(req.unsignCookie(cookie).value)
+        const postId = req.params.id
+
+        const post = await db.getPostById(fastify.pg, postId)
+        if (post.rows.length > 0 && post.rows[0].user_id === user.user_id) {
+            await db.deletePost(fastify.pg, postId)
+        }
+
+        return reply.redirect('/feed')
+    })
+
+    fastify.get('/post/edit/:id', async (req, reply) => {
+        const cookie = req.cookies.session_id
+        if (!cookie || !req.unsignCookie(cookie)) return reply.redirect('/login')
+
+        const user = JSON.parse(req.unsignCookie(cookie).value)
+        const postId = req.params.id
+
+        const post = await db.getPostById(fastify.pg, postId)
+
+        if (post.rows.length === 0 || post.rows[0].user_id !== user.user_id) {
+            return reply.redirect('/feed')
+        }
+
+        return reply.view('edit.ejs', { post: post.rows[0], user })
+    })
+
+    fastify.post('/post/update/:id', async (req, reply) => {
+        const cookie = req.cookies.session_id
+        if (!cookie || !req.unsignCookie(cookie)) return reply.redirect('/login')
+
+        const user = JSON.parse(req.unsignCookie(cookie).value)
+        const postId = req.params.id
+        const { content, category } = req.body
+
+        const post = await db.getPostById(fastify.pg, postId)
+
+        if (post.rows.length > 0 && post.rows[0].user_id === user.user_id) {
+            await db.updatePost(fastify.pg, { id: postId, content, category })
+        }
 
         return reply.redirect('/feed')
     })

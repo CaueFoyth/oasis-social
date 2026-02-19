@@ -29,9 +29,37 @@ const getPosts = async (client) => {
     return result
 }
 
+
+const updatePost = async (client, { id, content, category }) => {
+    const result = await client.query(
+        'UPDATE posts SET content = $1, category = $2 WHERE id = $3 RETURNING *',
+        [content, category, id]
+    )
+    return result
+}
+
+const deletePost = async (client, id) => {
+    const result = await client.query(
+        'DELETE FROM posts WHERE id = $1 RETURNING *',
+        [id]
+    )
+    return result
+}
+
+const getPostById = async (client, id) => {
+    const result = await client.query(
+        'SELECT * FROM posts WHERE id = $1',
+        [id]
+    )
+    return result
+}
+
 module.exports = {
     createUser,
     getUserByEmail,
     createPost,
-    getPosts
+    getPosts,
+    updatePost,
+    deletePost,
+    getPostById
 }
